@@ -4,18 +4,29 @@ const browserActionHandler = ({ id }, tab) => {
   chrome.tabs.executeScript({ file: 'code/main.js' })
 }
 
+const getTokens = () => {
+  const title = document.querySelector('head title')?.innerText
+  const headlines = Object.values(document.getElementsByTagName('h1'))
+    .map(headline => headline.innerText)
+    .filter(headline => headline.length)
+
+  const filteredHeadlines = headlines.filter(headline => title.includes(headline))
+  return filteredHeadlines[0] || headlines[0]
+}
+
 const messageRequestHandler = port => {
-  if (port.name === 'dom') {
+  if (port.name === 'api') {
     port.onMessage.addListener(({ request }) => {
-      if (request === 'get') {
+      if (request === 'getTokens') {
         chrome.tabs.query({
           active: true,
           windowId: chrome.windows.WINDOW_ID_CURRENT
         }, tabs => {
           const { id } = tabs[0].url
-          const code = `document.all[0]`
+          const code = `(${getTokens.toString()})()
+          `
           
-          chrome.tabs.executeScript(id, { code }, result => port.postMessage({ result }))
+          chrome.tabs.executeScript(id, { code }, result => port.postMessage({ tokens: result }))
         })
       }
     })

@@ -1,11 +1,10 @@
-var domPort = chrome.extension.connect({ name: 'dom' })
+var port = chrome.extension.connect({ name: 'api' })
 
-domPort.postMessage({request: "get"});
+port.postMessage({request: "getTokens"});
 
-domPort.onMessage.addListener(({ result }) => {
-    if (result) {
-      const tokens = getTokens(result)
-      const suggestions = getSuggestions(tokens)
+port.onMessage.addListener(({ tokens }) => {
+    if (tokens && tokens[0]) {
+      const suggestions = getSuggestions(tokens[0])
       console.log(`got suggestions: ${JSON.stringify(suggestions)}`)
       // todo: handle displaying of suggestions
     }
