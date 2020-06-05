@@ -1,9 +1,22 @@
+let initialized = false;
+
 const browserActionHandler = (info, tab) => {
-  chrome.tabs.executeScript({ file: 'code/main.js' })
-  chrome.tabs.executeScript({ file: 'code/api.js' })
+  if (!initialized) {
+    chrome.tabs.executeScript({ file: 'code/tokenizer.js' })
+    chrome.tabs.executeScript({ file: 'code/api.js' })
+    chrome.tabs.executeScript({ file: 'code/main.js' })
+    initialized = true
+  }
+  chrome.tabs.query({
+    active: true,
+    windowId: chrome.windows.WINDOW_ID_CURRENT
+  }, tabs => {
+    const { id } = tabs[0].url
+    let code = `domPort.postMessage({ request: 'get' })`
+    chrome.tabs.executeScript(id, { code })
+  })
 }
 
-  
 const messageRequestHandler = port => {
   if (port.name === 'dom') {
     port.onMessage.addListener(({ request }) => {
