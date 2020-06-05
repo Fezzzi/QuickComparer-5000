@@ -1,20 +1,7 @@
-let initialized = false;
-
-const browserActionHandler = (info, tab) => {
-  if (!initialized) {
-    chrome.tabs.executeScript({ file: 'code/tokenizer.js' })
-    chrome.tabs.executeScript({ file: 'code/api.js' })
-    chrome.tabs.executeScript({ file: 'code/main.js' })
-    initialized = true
-  }
-  chrome.tabs.query({
-    active: true,
-    windowId: chrome.windows.WINDOW_ID_CURRENT
-  }, tabs => {
-    const { id } = tabs[0].url
-    let code = `domPort.postMessage({ request: 'get' })`
-    chrome.tabs.executeScript(id, { code })
-  })
+const browserActionHandler = ({ id }, tab) => {
+  chrome.tabs.executeScript({ file: 'code/tokenizer.js' })
+  chrome.tabs.executeScript({ file: 'code/api.js' })
+  chrome.tabs.executeScript({ file: 'code/main.js' })
 }
 
 const messageRequestHandler = port => {
@@ -26,7 +13,8 @@ const messageRequestHandler = port => {
           windowId: chrome.windows.WINDOW_ID_CURRENT
         }, tabs => {
           const { id } = tabs[0].url
-          let code = 'document'
+          const code = `document.all[0]`
+          
           chrome.tabs.executeScript(id, { code }, result => port.postMessage({ result }))
         })
       }

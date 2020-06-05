@@ -1,4 +1,6 @@
-const domPort = chrome.extension.connect({ name: 'dom' })
+var domPort = chrome.extension.connect({ name: 'dom' })
+
+domPort.postMessage({request: "get"});
 
 domPort.onMessage.addListener(({ result }) => {
     if (result) {
