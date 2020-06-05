@@ -1,0 +1,37 @@
+{
+	"manifest_version": 2,
+	"name": "QuickComparer 5000",
+	"version": "1.0.0",
+	"description": "Tool to search web for similar products from different sellers",
+	"background": {
+		"persistent": true,
+		"scripts": ["code/background.js"]
+	},
+	"icons": { 
+		"16": "static/icon16.png",
+		"24": "static/icon24.png",
+		"32": "static/icon32.png",
+		"48": "static/icon48.png",
+		"64": "static/icon64.png",
+		"128": "static/icon128.png" 
+	},
+	"browser_action": {
+		"default_title": "QuickComparer 5000"
+	},
+	"permissions": ["activeTab"],
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+	"author": "CIRACU developers",
+	"commands": {
+		"_execute_browser_action": {
+			"suggested_key": {
+				"windows": "Ctrl+Shift+A",
+				"mac": "Command+Shift+A",
+				"chromeos": "Ctrl+Shift+A",
+				"linux": "Ctrl+Shift+A"
+			}
+		}
+	},
+	"homepage_url": "https://github.com/Fezzzi/QuickComparer-5000",
+	"offline_enabled": false,
+	"version_name": "1.0.0"
+}
