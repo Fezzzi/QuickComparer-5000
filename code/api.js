@@ -1,4 +1,19 @@
-const getSuggestions = async query => {
+var getSuggestions = async query => {
+  const proxyUrl = (path) => (
+    // proxy reffering to https://www.srovnanicen.cz/
+    `https://mapakci.cz/quickcomparerproxy/${path}`
+  )
+  
+  const urlToDom = async (url) => (
+    await fetch(url).then( r =>
+        r.text()
+    ).then((html) => {
+      const dummy = document.createElement( 'html' )
+      dummy.innerHTML = html
+      return dummy
+    })
+  )
+
   console.log(`getting sugestions for query: ${query}`)
   const url = proxyUrl(`q/${encodeURI(query)}/`)
   const searchDom = await urlToDom(url)
@@ -35,18 +50,3 @@ const getSuggestions = async query => {
   console.log(ret)
   return ret
 }
-
-const proxyUrl = (path) => (
-  // proxy reffering to https://www.srovnanicen.cz/
-  `https://mapakci.cz/quickcomparerproxy/${path}`
-)
-
-const urlToDom = async (url) => (
-  await fetch(url).then( r =>
-      r.text()
-  ).then((html) => {
-    const dummy = document.createElement( 'html' )
-    dummy.innerHTML = html
-    return dummy
-  })
-)

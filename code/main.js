@@ -1,11 +1,14 @@
 var port = chrome.extension.connect({ name: 'api' })
 
-port.postMessage({request: "getTokens"});
+port.postMessage({request: 'getTokens'});
 
-port.onMessage.addListener(({ tokens }) => {
-    if (tokens && tokens[0]) {
-      const suggestions = getSuggestions(tokens[0])
-      console.log(`got suggestions: ${JSON.stringify(suggestions)}`)
-      // todo: handle displaying of suggestions
-    }
+port.onMessage.addListener(({ result }) => {
+  const { token, url } = result[0]
+  if (token) {
+    getSuggestions(token).then(result => port.postMessage({
+      request: 'openPopup',
+      data: result,
+      url,
+    }))
+  }
 })
