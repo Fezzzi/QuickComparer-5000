@@ -5,7 +5,7 @@ var getSuggestions = async query => {
   )
   
   const urlToDom = async (url) => (
-    await fetch(url).then( r =>
+    await fetch(url).then(r =>
         r.text()
     ).then(stringToDom)
   )
@@ -18,13 +18,13 @@ var getSuggestions = async query => {
   )
 
   let allOffers = []
-  let title = "Nothing found"
+  let productName = ""
   if (allProductLinks.length > 0) {
     const comparisonLink = allProductLinks[0].getAttribute("href")
 
     const comparisonsDom = await urlToDom(proxyUrl(comparisonLink))
 
-    title = comparisonsDom.querySelector("h1.headline").textContent.trim()
+    productName = comparisonsDom.querySelector("h1.headline").textContent.trim()
     console.log(comparisonsDom)
     allOffers = Array.from(
         comparisonsDom.querySelectorAll("div.overview.js-offer-list div.item")
@@ -39,13 +39,14 @@ var getSuggestions = async query => {
   }
 
   return {
-    title: title,
+    productName: productName,
+    query: query,
     comparisons: allOffers
   }
 }
 
 var stringToDom = (str) => {
-  const dummy = document.createElement( 'html' )
+  const dummy = document.createElement('html')
   dummy.innerHTML = str
   return dummy
 }

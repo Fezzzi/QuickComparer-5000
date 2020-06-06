@@ -31,6 +31,19 @@
   color: #8e8e8e;
 }
 
+.quickComparer-5000 .close-popup-btn {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
+
+.quickComparer-5000 table {
+  min-width: 300px;
+}
+
 .quickComparer-5000 td.company-name,
 .quickComparer-5000 td.item-price,
 .quickComparer-5000 td.item-link {
@@ -64,7 +77,7 @@
 }
 
 .quickComparer-5000 .input-row {
-  margin: 6px 10px 18px 10px;
+  margin: 20px 10px 18px 10px;
 }
 
 .quickComparer-5000 .input-wrapper {

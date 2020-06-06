@@ -1,5 +1,6 @@
-var generateComparisonsOverview = (comparisons, query) => (
+var generateComparisonsOverview = ({ comparisons, query, productName }) => (
     `
+    <div onclick="this.parentElement.remove()" class="close-popup-btn">x</div>
     <div class="input-row">
         <div class="input-wrapper">
             <label for="query">
@@ -8,6 +9,10 @@ var generateComparisonsOverview = (comparisons, query) => (
         </div>
         <button onclick="refreshSearch(this)">Search</button>
     </div>
+    ${
+        productName.length > 1 ? '<div>Found product: ' + productName + '</div>' : ''
+    }
+    
     <table>
     ${
         !comparisons.length?

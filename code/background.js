@@ -17,10 +17,10 @@ const getTokens = () => {
   }
 }
 
-const addResults = ({ comparisons, title }) => {
+const addResults = (data) => {
   const newModal = document.createElement('div')
   newModal.className = 'quickComparer-5000'
-  newModal.innerHTML = generateComparisonsOverview(comparisons, title)
+  newModal.innerHTML = generateComparisonsOverview(data)
   const oldModal = document.querySelector('.quickComparer-5000')
   if (oldModal) {
     oldModal.remove()
