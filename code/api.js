@@ -18,7 +18,7 @@ var getSuggestions = async query => {
   )
 
   let allOffers = []
-  let title = "not found"
+  let title = "Nothing found"
   if (allProductLinks.length > 0) {
     const comparisonLink = allProductLinks[0].getAttribute("href")
 
@@ -34,16 +34,14 @@ var getSuggestions = async query => {
       price: o.querySelector("strong.price.tooltip span[itemprop=price]").getAttribute("content"),
       currency: o.querySelector("strong.price.tooltip span[itemprop=priceCurrency]").textContent.trim(),
       itemLink: o.querySelector("div.fork a").getAttribute("href")
-    }))
+    })).sort((a, b) => a.price - b.price)
+
   }
 
-
-  ret = {
+  return {
     title: title,
     comparisons: allOffers
   }
-
-  return ret
 }
 
 var stringToDom = (str) => {
