@@ -6,7 +6,7 @@ var getSuggestions = async query => {
   
   const urlToDom = async (url) => (
     await fetch(url).then(r =>
-        r.text()
+      r.text()
     ).then(stringToDom)
   )
 
@@ -14,28 +14,27 @@ var getSuggestions = async query => {
   const url = proxyUrl(`q/${encodeURI(query)}/`)
   const searchDom = await urlToDom(url)
   const allProductLinks = searchDom.querySelectorAll(
-      "article.item.js-offer div.block.fork a.var-2"
+    'article.item.js-offer div.block.fork a.var-2'
   )
 
   let allOffers = []
   let productName = ""
   if (allProductLinks.length > 0) {
-    const comparisonLink = allProductLinks[0].getAttribute("href")
+    const comparisonLink = allProductLinks[0].getAttribute('href')
 
     const comparisonsDom = await urlToDom(proxyUrl(comparisonLink))
 
     productName = comparisonsDom.querySelector("h1.headline").textContent.trim()
     console.log(comparisonsDom)
     allOffers = Array.from(
-        comparisonsDom.querySelectorAll("div.overview.js-offer-list div.item")
+      comparisonsDom.querySelectorAll('div.overview.js-offer-list div.item')
     ).map(o => ({
-      companyName: o.querySelector("div.block.ratings a").title,
-      companyImgSrc: o.querySelector("div.seo img")?.src,
-      price: o.querySelector("strong.price.tooltip span[itemprop=price]").getAttribute("content"),
-      currency: o.querySelector("strong.price.tooltip span[itemprop=priceCurrency]").textContent.trim(),
-      itemLink: o.querySelector("div.fork a").getAttribute("href")
+      companyName: o.querySelector('div.block.ratings a').title,
+      companyImgSrc: o.querySelector('div.seo img')?.src,
+      price: o.querySelector('strong.price.tooltip span[itemprop=price]').getAttribute('content'),
+      currency: o.querySelector('strong.price.tooltip span[itemprop=priceCurrency]').textContent.trim(),
+      itemLink: o.querySelector('div.fork a').getAttribute('href')
     })).sort((a, b) => a.price - b.price)
-
   }
 
   return {

@@ -11,16 +11,14 @@ const getTokens = () => {
     .filter(headline => headline.length)
 
   const filteredHeadlines = headlines.filter(headline => title.includes(headline))
-  return {
-    token: filteredHeadlines[0] || headlines[0],
-    url: '',
-  }
+  return { token: filteredHeadlines[0] || headlines[0] }
 }
 
 const addResults = (data) => {
   const newModal = document.createElement('div')
   newModal.className = 'quickComparer-5000'
   newModal.innerHTML = generateComparisonsOverview(data)
+  
   const oldModal = document.querySelector('.quickComparer-5000')
   if (oldModal) {
     oldModal.remove()
@@ -28,29 +26,24 @@ const addResults = (data) => {
   document.body.appendChild(newModal)
 }
 
+const queryTab = (code, callback) =>
+  chrome.tabs.query({
+    active: true,
+    windowId: chrome.windows.WINDOW_ID_CURRENT
+  }, tabs => {
+    const { id } = tabs[0].url
+    chrome.tabs.executeScript(id, { code }, callback)
+  })
+
 const messageRequestHandler = port => {
   if (port.name === 'api') {
     port.onMessage.addListener(({ request, data }) => {
       switch (request) {
         case 'getTokens': 
-          chrome.tabs.query({
-            active: true,
-            windowId: chrome.windows.WINDOW_ID_CURRENT
-          }, tabs => {
-            const { id } = tabs[0].url
-            const code = `(${getTokens.toString()})()`
-            chrome.tabs.executeScript(id, { code }, result => port.postMessage({ result }))
-          })
+          queryTab(`(${getTokens.toString()})()`, result => port.postMessage({ result }))
           break
-        case 'openPopup':
-          chrome.tabs.query({
-            active: true,
-            windowId: chrome.windows.WINDOW_ID_CURRENT
-          }, tabs => {
-            const { id } = tabs[0].url
-            const code = `(${addResults.toString()})(${JSON.stringify(data)})` 
-            chrome.tabs.executeScript(id, { code })
-          })
+        case 'openModal':
+          queryTab(`(${addResults.toString()})(${JSON.stringify(data)})`, null)
           break
       }
     })
