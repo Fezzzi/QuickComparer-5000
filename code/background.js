@@ -1,4 +1,4 @@
-const browserActionHandler = ({ id }, tab) => {
+const browserActionHandler = () => {
   chrome.tabs.executeScript({ file: 'code/html.js' })
   chrome.tabs.executeScript({ file: 'code/api.js' })
   chrome.tabs.executeScript({ file: 'code/main.js' })
@@ -17,21 +17,21 @@ const getTokens = () => {
   }
 }
 
-const addResults = (data) => {
-  const modal = document.createElement('div')
-  modal.className = 'quickComparer-5000'
-  console.log("data", data)
-  modal.innerHTML = generateComparisonsOverview(
-    data.data.comparisons,
-    data.data.title,
-  )
-  document.body.appendChild(modal)
+const addResults = ({ comparisons, title }) => {
+  const newModal = document.createElement('div')
+  newModal.className = 'quickComparer-5000'
+  newModal.innerHTML = generateComparisonsOverview(comparisons, title)
+  const oldModal = document.querySelector('.quickComparer-5000')
+  if (oldModal) {
+    oldModal.remove()
+  }
+  document.body.appendChild(newModal)
 }
 
 const messageRequestHandler = port => {
   if (port.name === 'api') {
-    port.onMessage.addListener((action) => {
-      switch (action.request) {
+    port.onMessage.addListener(({ request, data }) => {
+      switch (request) {
         case 'getTokens': 
           chrome.tabs.query({
             active: true,
@@ -48,7 +48,7 @@ const messageRequestHandler = port => {
             windowId: chrome.windows.WINDOW_ID_CURRENT
           }, tabs => {
             const { id } = tabs[0].url
-            const code = `(${addResults.toString()})(${JSON.stringify(action)})` 
+            const code = `(${addResults.toString()})(${JSON.stringify(data)})` 
             chrome.tabs.executeScript(id, { code })
           })
           break

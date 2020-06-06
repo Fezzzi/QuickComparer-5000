@@ -47,5 +47,3 @@ var comparisonRow = (c) => (
     </tr>
     `
 )
-
-

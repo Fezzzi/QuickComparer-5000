@@ -1,6 +1,6 @@
 var port = chrome.extension.connect({ name: 'api' })
 
-port.postMessage({request: 'getTokens'});
+port.postMessage({ request: 'getTokens' });
 
 port.onMessage.addListener(({ result }) => {
   const { token, url } = result[0]
