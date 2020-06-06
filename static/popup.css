@@ -1,11 +1,22 @@
 
-footer {
-  order: 5;
-  padding: 0 20px;
-  background-color: #fafafa;
+.quickComparer-5000 {
+  right: 0;
+  top: 0;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  z-index: 9999999;
+  height: 100vh;
+  overflow: auto;
+  position:fixed;
 }
 
-.footer-wrapper {
+.quickComparer-5000 footer {
+  order: 5;
+  padding: 0 20px;
+}
+
+.quickComparer-5000 .footer-wrapper {
   max-width: 1012px;
   padding: 10px 0;
   text-align: center;
@@ -16,48 +27,107 @@ footer {
   width: 100%;
 }
 
-.footer-text {
+.quickComparer-5000 .footer-text {
   color: #8e8e8e;
 }
 
-.kundi-zlem {
-  right: 0;
-  top: 0;
-  background-color: white;
-  padding: 10px;
-  border: 1px solid #ccc;
-  z-index: 9999999;
-  height: 100vh;
-  overflow: scroll;
-  position:fixed;
-}
-
-.kundi-zlem td.company-name, .kundi-zlem td.item-price, .kundi-zlem td.item-link {
+.quickComparer-5000 td.company-name,
+.quickComparer-5000 td.item-price,
+.quickComparer-5000 td.item-link {
   padding: 2px 10px;
 }
 
-.kundi-zlem td.item-price {
+.quickComparer-5000 td.item-price {
   font-weight: bold;
   padding-right: 20px;
   border-radius: 0 10px 10px 0;
 }
 
-.kundi-zlem td.company-img {
+.quickComparer-5000 td.company-img {
   padding-left: 20px;
   border-radius: 10px 0 0 10px;
 }
 
-.kundi-zlem td.company-img img {
+.quickComparer-5000 td.company-img img {
   vertical-align:middle;
   padding: 4px 0;
 }
 
-.kundi-zlem tr {
+.quickComparer-5000 tr {
   border-bottom: 5px solid white;
   height: 50px;
 }
 
-.kundi-zlem tr:hover {
+.quickComparer-5000 tr:hover {
   cursor: pointer;
   background-color: #eee;
+}
+
+.quickComparer-5000 .input-row {
+  margin: 6px 10px 18px 10px;
+}
+
+.quickComparer-5000 .input-wrapper {
+  align-items: center;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: #262626;
+  font-size: 14px;
+  position: relative;
+  width: calc(100% - 80px);
+  display: inline-block;
+}
+
+.quickComparer-5000 .input-wrapper label {
+  width: 100%;
+}
+
+.quickComparer-5000 .input-field {
+  background: #fafafa;
+  overflow: hidden;
+  padding: 9px 0 7px 8px;
+  text-overflow: ellipsis;
+  margin: 0;
+  border: 0;
+  box-shadow: none;
+  flex: 1 0 auto;
+}
+
+.quickComparer-5000 .input-row button {
+  border: none;
+  background-color: #0095f6;
+  border-radius: 4px;
+  top: -1px;
+  color: #fff;
+  position: relative;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 5px 9px;
+  margin: 0 5px;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 64px;
+  height: 35px;
+}
+
+.quickComparer-5000 .input-row .input-wrapper:focus-within {
+  border-color: #a9a9a9;
+}
+
+.quickComparer-5000 .input-row input:focus {
+  box-shadow: none;
+  outline: 0;
+}
+
+.quickComparer-5000 .input-row button:focus {
+  outline: 0;
+}
+
+.quickComparer-5000 .input-row button:active {
+  opacity: .8;
 }

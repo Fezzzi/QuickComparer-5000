@@ -1,6 +1,13 @@
-
-var generateComparisonsOverview = (comparisons) => (
+var generateComparisonsOverview = (comparisons, query) => (
     `
+    <div class="input-row">
+        <div class="input-wrapper">
+            <label for="query">
+                <input placeholder="Query" type="text" class="input-field" value="${query}">
+            </label>
+        </div>
+        <button onclick="refreshSearch(this)">Search</button>
+    </div>
     <table>
     ${
         !comparisons.length?
@@ -10,6 +17,11 @@ var generateComparisonsOverview = (comparisons) => (
                 .join('\n')
     }
     </table>
+    <footer>
+        <div class="footer-wrapper">
+            <span class="footer-text">&copy; 2020 CIRACU developers</span>
+        </div>
+    </footer>
     `
 )
 

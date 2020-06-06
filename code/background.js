@@ -19,9 +19,12 @@ const getTokens = () => {
 
 const addResults = (data) => {
   const modal = document.createElement('div')
-  modal.className = 'kundi-zlem'
+  modal.className = 'quickComparer-5000'
   console.log("data", data)
-  modal.innerHTML = generateComparisonsOverview(data.data.comparisons)
+  modal.innerHTML = generateComparisonsOverview(
+    data.data.comparisons,
+    data.data.title,
+  )
   document.body.appendChild(modal)
 }
 
