@@ -7,24 +7,20 @@ var getSuggestions = async query => {
   const urlToDom = async (url) => (
     await fetch(url).then( r =>
         r.text()
-    ).then((html) => {
-      const dummy = document.createElement( 'html' )
-      dummy.innerHTML = html
-      return dummy
-    })
+    ).then(stringToDom)
   )
 
   console.log(`getting sugestions for query: ${query}`)
   const url = proxyUrl(`q/${encodeURI(query)}/`)
   const searchDom = await urlToDom(url)
+  const allProductLinks = searchDom.querySelectorAll(
+      "article.item.js-offer div.block.fork a.var-2"
+  )
 
-  const knownItem = true // TODO
   let allOffers = []
   let title = "not found"
-  if (knownItem) {
-    const comparisonLink = searchDom.querySelector(
-        "article.item.js-offer div.block.fork a.var-2"
-    ).getAttribute("href")
+  if (allProductLinks.length > 0) {
+    const comparisonLink = allProductLinks[0].getAttribute("href")
 
     const comparisonsDom = await urlToDom(proxyUrl(comparisonLink))
 
@@ -39,14 +35,19 @@ var getSuggestions = async query => {
       currency: o.querySelector("strong.price.tooltip span[itemprop=priceCurrency]").textContent.trim(),
       itemLink: o.querySelector("div.fork a").getAttribute("href")
     }))
-  } else {
-    // TODO
   }
+
 
   ret = {
     title: title,
     comparisons: allOffers
   }
-  console.log(ret)
+
   return ret
+}
+
+var stringToDom = (str) => {
+  const dummy = document.createElement( 'html' )
+  dummy.innerHTML = str
+  return dummy
 }

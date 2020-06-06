@@ -33,3 +33,13 @@ footer {
 .footer-text {
   color: #8e8e8e;
 }
+
+.kundi-zlem {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  z-index: 9999999;
+}

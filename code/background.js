@@ -1,4 +1,5 @@
 const browserActionHandler = ({ id }, tab) => {
+  chrome.tabs.executeScript({ file: 'code/html.js' })
   chrome.tabs.executeScript({ file: 'code/api.js' })
   chrome.tabs.executeScript({ file: 'code/main.js' })
 }
@@ -19,7 +20,8 @@ const getTokens = () => {
 const addResults = (data) => {
   const modal = document.createElement('div')
   modal.className = 'kundi-zlem'
-  modal.innerText = JSON.stringify(data)
+  console.log("data", data)
+  modal.innerHTML = generateComparisonsOverview(data.data.comparisons)
   document.body.appendChild(modal)
 }
 
